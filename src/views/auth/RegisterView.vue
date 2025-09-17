@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-
 const theme = ref('light')
 
 function onClick() {
@@ -9,21 +8,25 @@ function onClick() {
 
 const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']
 
+// Form fields
+const username = ref('')
 const email = ref('')
+const phone = ref('')
 const password = ref('')
-const rememberMe = ref(false)
 const showPassword = ref(false)
 
-function login() {
+function register() {
+  console.log('Username:', username.value)
   console.log('Email:', email.value)
+  console.log('Phone:', phone.value)
   console.log('Password:', password.value)
-  console.log('Remember Me:', rememberMe.value)
 }
 </script>
 
 <template>
   <v-responsive class="border rounded">
     <v-app :theme="theme">
+      <!-- App Bar -->
       <v-app-bar class="px-4 d-flex align-center" color="blue-lighten-1">
         <!-- Logo / App Name -->
         <div>
@@ -40,22 +43,44 @@ function login() {
         ></v-btn>
       </v-app-bar>
 
+      <!-- Main Content -->
       <v-main>
         <v-container class="d-flex justify-center align-center fill-height">
           <v-card class="pa-6" max-width="400" elevation="0">
             <!-- Title -->
             <div class="text-center mb-6">
-              <h2 class="font-weight-bold">Hi, Welcome Back!</h2>
+              <h2 class="font-weight-bold">Create an account</h2>
             </div>
 
-            <!-- Login Form -->
+            <!-- Register Form -->
             <v-form>
+              <!-- Username -->
+              <v-text-field
+                v-model="username"
+                label="Username"
+                placeholder="Enter Your Username"
+                outlined
+                dense
+                class="mb-3"
+              />
+
               <!-- Email -->
               <v-text-field
                 v-model="email"
                 label="Email"
                 type="email"
-                placeholder="example@gmail.com"
+                placeholder="Enter Your Email"
+                outlined
+                dense
+                class="mb-3"
+              />
+
+              <!-- Phone Number -->
+              <v-text-field
+                v-model="phone"
+                label="Phone Number"
+                type="tel"
+                placeholder="Enter Your Phone Number"
                 outlined
                 dense
                 class="mb-3"
@@ -74,18 +99,10 @@ function login() {
                 @click:append-inner="showPassword = !showPassword"
               />
 
-              <!-- Remember Me + Forgot Password -->
-              <div class="d-flex justify-space-between align-center mb-4 text-small">
-                <v-checkbox v-model="rememberMe" hide-details density="compact" class="text-small">
-                  <template #label>
-                    <span class="text-small">Remember Me</span>
-                  </template>
-                </v-checkbox>
-                <a href="#" class="text-red text-decoration-none">Forgot Password?</a>
-              </div>
-
-              <!-- Login Button -->
-              <v-btn block color="primary" class="mb-4" height="45" @click="login"> Login </v-btn>
+              <!-- Sign Up Button -->
+              <v-btn block color="primary" class="mb-4" height="45" @click="register">
+                Sign Up
+              </v-btn>
 
               <!-- Divider with text -->
               <div class="d-flex align-center mb-4">
@@ -94,7 +111,7 @@ function login() {
                 <v-divider class="flex-grow-1"></v-divider>
               </div>
 
-              <!-- Social Login -->
+              <!-- Social Sign Up -->
               <v-btn
                 block
                 color="blue darken-1"
@@ -103,7 +120,7 @@ function login() {
                 prepend-icon="mdi-facebook"
                 href="https://www.facebook.com"
               >
-                Login with Facebook
+                Signup with Facebook
               </v-btn>
               <v-btn
                 block
@@ -113,19 +130,20 @@ function login() {
                 prepend-icon="mdi-google"
                 href="https://accounts.google.com"
               >
-                Login with Google
+                Signup with Google
               </v-btn>
 
-              <!-- Sign Up Link -->
+              <!-- Already have an account -->
               <div class="text-center mt-4">
-                Don’t have an account?
-                <a href="/register" class="text-blue text-decoration-none">Sign Up</a>
+                Already have an account?
+                <RouterLink to="/login" class="text-blue text-decoration-none">Login</RouterLink>
               </div>
             </v-form>
           </v-card>
         </v-container>
       </v-main>
 
+      <!-- Footer -->
       <v-footer app class="text-center d-flex flex-column ga-2 py-2" color="blue-lighten-2">
         <div class="d-flex ga-3">
           <v-btn
