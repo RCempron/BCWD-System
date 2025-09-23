@@ -90,7 +90,9 @@ function login() {
               </div>
 
               <!-- Login Button -->
-              <v-btn block color="primary" class="mb-4" height="45" @click="login"> Login </v-btn>
+              <v-btn block color="primary" class="mb-4" height="45" @click="login">
+                <RouterLink to="/home">Login</RouterLink>
+              </v-btn>
 
               <!-- Divider with text -->
               <div class="d-flex align-center mb-4">
