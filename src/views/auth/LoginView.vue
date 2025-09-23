@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter, RouterLink } from 'vue-router' // Import RouterLink
+
+const router = useRouter()
 
 const theme = ref('light')
 
@@ -18,6 +21,7 @@ function login() {
   console.log('Email:', email.value)
   console.log('Password:', password.value)
   console.log('Remember Me:', rememberMe.value)
+  router.push({ name: 'home' }) // Use router to navigate
 }
 </script>
 
@@ -28,7 +32,8 @@ function login() {
         <!-- Logo / App Name -->
         <div>
           <h2 class="font-weight-bold mb-0">
-            <span class="text-primary">Leak</span><span class="text-black">Alert</span>
+            <span class="text-primary">BCWD </span
+            ><span class="text-black">LEAK COMPLAINT SYSTEM</span>
           </h2>
         </div>
         <v-spacer></v-spacer>
@@ -119,7 +124,10 @@ function login() {
               <!-- Sign Up Link -->
               <div class="text-center mt-4">
                 Don’t have an account?
-                <a href="/register" class="text-blue text-decoration-none">Sign Up</a>
+                <RouterLink :to="{ name: 'register' }" class="text-blue text-decoration-none">
+                  Sign Up
+                </RouterLink>
+                >
               </div>
             </v-form>
           </v-card>

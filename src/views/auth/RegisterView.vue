@@ -31,7 +31,8 @@ function register() {
         <!-- Logo / App Name -->
         <div>
           <h2 class="font-weight-bold mb-0">
-            <span class="text-primary">Leak</span><span class="text-black">Alert</span>
+            <span class="text-primary">BCWD </span
+            ><span class="text-black">LEAK COMPLAINT SYSTEM</span>
           </h2>
         </div>
         <v-spacer></v-spacer>
