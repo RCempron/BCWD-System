@@ -21,7 +21,7 @@ function login() {
   console.log('Email:', email.value)
   console.log('Password:', password.value)
   console.log('Remember Me:', rememberMe.value)
-  router.push({ name: 'home' }) // Use router to navigate
+  router.push({ name: 'Dashboard' }) // Use router to navigate
 }
 </script>
 
