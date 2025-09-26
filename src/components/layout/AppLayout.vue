@@ -6,7 +6,7 @@ function onClick() {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
 
-const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']gi
+const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']
 </script>
 
 <template>

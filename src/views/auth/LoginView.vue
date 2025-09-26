@@ -106,7 +106,7 @@ function login() {
             >
           </div>
         </v-form>
-      </v-card>x
+      </v-card>
     </template>
   </AppLayout>
 </template>
