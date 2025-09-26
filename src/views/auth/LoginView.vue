@@ -91,7 +91,7 @@ function login() {
 
               <!-- Login Button -->
               <v-btn block color="primary" class="mb-4" height="45" @click="login">
-                <RouterLink to="/home">Login</RouterLink>
+                <RouterLink to="/dashboard">Login</RouterLink>
               </v-btn>
 
               <!-- Divider with text -->
