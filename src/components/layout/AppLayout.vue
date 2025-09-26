@@ -1,81 +1,52 @@
 <script setup>
-import { isAuthenticated } from '@/utils/supabase'
+import { ref } from 'vue'
+const theme = ref('light')
 
-import { onMounted, ref } from 'vue'
-import { useDisplay } from 'vuetify'
-
-const props = defineProps(['isWithAppBarNavIcon'])
-
-const emit = defineEmits(['isDrawerVisible'])
-
-// Utilize predefined vue functions
-const { mobile } = useDisplay()
-const theme = ref(localStorage.getItem('theme') ?? 'light')
-
-// Load Variables
-const isLoggedIn = ref(false)
-
-//  Toggle Theme
-function onToggleTheme() {
+function onClick() {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
-  localStorage.setItem('theme', theme.value)
 }
 
-// Get Authentication status from supabase
-const getLoggedStatus = async () => {
-  isLoggedIn.value = await isAuthenticated()
-}
-
-// Load Functions during component rendering
-onMounted(() => {
-  getLoggedStatus()
-})
+const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']gi
 </script>
 
 <template>
-  <v-responsive>
+  <v-responsive class="border rounded">
     <v-app :theme="theme">
-      <v-app-bar
-        class="px-3"
-        :color="theme === 'light' ? 'grey-lighten-1' : 'grey-darken-4'"
-        border
-      >
-        <v-app-bar-nav-icon
-          v-if="props.isWithAppBarNavIcon"
-          icon="mdi-menu"
-          :theme="theme"
-          @click="emit('isDrawerVisible')"
-        >
-        </v-app-bar-nav-icon>
-
+      <!-- App Bar -->
+      <v-app-bar class="px-4 d-flex align-center" color="blue-lighten-1">
+        <!-- Logo / App Name -->
+        <div>
+          <h2 class="font-weight-bold mb-0">
+            <span class="text-primary">BCWD </span
+            ><span class="text-black">LEAK COMPLAINT SYSTEM</span>
+          </h2>
+        </div>
         <v-spacer></v-spacer>
-
         <v-btn
-          class="me-2"
-          :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-          variant="elevated"
+          :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
           slim
-          @click="onToggleTheme"
+          size="large"
+          @click="onClick"
         ></v-btn>
-
-
       </v-app-bar>
 
-      <slot name="navigation"></slot>
-
+      <!-- Main Content -->
       <v-main>
-        <slot name="content"></slot>
+        <v-container class="d-flex justify-center align-center fill-height">
+          <slot name="content"></slot>
+        </v-container>
       </v-main>
 
-      <v-footer
-        class="font-weight-bold"
-        :class="mobile ? 'text-caption' : ''"
-        :color="theme === 'light' ? 'grey-lighten-1' : 'grey-darken-4'"
-        border
-        app
-      >
-        <div :class="mobile ? 'w-100 text-center' : ''">
-          Copyright © 2024 - Shirlix Meatshop | All Rights Reserved
+      <!-- Footer -->
+      <v-footer app class="text-center d-flex flex-column ga-2 py-2" color="blue-lighten-2">
+        <div class="d-flex ga-3">
+          <v-btn
+            v-for="icon in icons"
+            :key="icon"
+            :icon="icon"
+            density="comfortable"
+            variant="text"
+          ></v-btn>
         </div>
       </v-footer>
     </v-app>
