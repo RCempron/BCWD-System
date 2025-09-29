@@ -1,28 +1,10 @@
 <script setup>
+import AppLayout from '@/components/layout/AppLayout.vue'
+import LoginForm from '@/components/auth/LoginForm.vue'
 import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router' // Import RouterLink
 
-const router = useRouter()
-
-const theme = ref('light')
-
-function onClick() {
-  theme.value = theme.value === 'light' ? 'dark' : 'light'
-}
-
 const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']
-
-const email = ref('')
-const password = ref('')
-const rememberMe = ref(false)
-const showPassword = ref(false)
-
-function login() {
-  console.log('Email:', email.value)
-  console.log('Password:', password.value)
-  console.log('Remember Me:', rememberMe.value)
-  router.push({ name: 'Dashboard' }) // Use router to navigate
-}
 </script>
 
 <template>
@@ -91,7 +73,7 @@ function login() {
 
               <!-- Login Button -->
               <v-btn block color="primary" class="mb-4" height="45" @click="login">
-                <RouterLink to="/Dashboard">Login</RouterLink>
+                <RouterLink to="/home">Login</RouterLink>
               </v-btn>
 
               <!-- Divider with text -->
