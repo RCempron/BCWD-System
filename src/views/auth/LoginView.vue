@@ -1,13 +1,14 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
 import LoginForm from '@/components/auth/LoginForm.vue'
-import { ref } from 'vue'
-import { useRouter, RouterLink } from 'vue-router' // Import RouterLink
+import { useDisplay } from 'vuetify'
 
+const { mobile } = useDisplay()
 const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']
 </script>
 
 <template>
+<<<<<<< HEAD
   <v-responsive class="border rounded">
     <v-app :theme="theme">
       <v-app-bar class="px-4 d-flex align-center" color="blue-lighten-1">
@@ -131,6 +132,21 @@ const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']
       </v-footer>
     </v-app>
   </v-responsive>
+=======
+  <AppLayout>
+    <template #content> 
+      
+      <v-card class="pa-6" max-width="400" elevation="0">
+        <!-- Title -->
+        <div class="text-center mb-6">
+          <h2 class="font-weight-bold">Hi, Welcome Back!</h2>
+        </div>
+
+        <LoginForm></LoginForm>
+      </v-card>
+    </template>
+  </AppLayout>
+>>>>>>> supabase/sidebar
 </template>
 
 <style scoped>

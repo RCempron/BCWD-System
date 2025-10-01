@@ -1,43 +1,64 @@
 <script setup>
+import {
+  requiredValidator,
+  emailValidator,
+  passwordValidator,
+  confirmedValidator,
+} from '@/utils/validators'
 import { ref } from 'vue'
 
-// Form fields
-const username = ref('')
-const email = ref('')
-const phone = ref('')
-const password = ref('')
-const showPassword = ref(false)
+const formDataDefault = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
+}
 
-function register() {
-  console.log('Username:', username.value)
-  console.log('Email:', email.value)
-  console.log('Phone:', phone.value)
-  console.log('Password:', password.value)
+const formData = ref({
+  ...formDataDefault,
+})
+
+const isPasswordVisible = ref(false)
+const isPasswordConfirmVisible = ref(false)
+const refVForm = ref()
+
+const onSubmit = () => {
+  alert(formData.value.email)
+}
+
+const onFormSubmit = () => {
+  refVForm.value?.validate().then(({ valid }) => {
+    if (valid) onSubmit()
+  })
 }
 </script>
 
 <template>
   <!-- Register Form -->
-  <v-form>
+   
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
     <!-- Username -->
     <v-text-field
-      v-model="username"
-      label="Username"
-      placeholder="Enter Your Username"
+       v-model="formData.firstname"
+      label="Firstname"
+      placeholder="Enter Your Firstname"
       outlined
       dense
       class="mb-3"
+      :rules="[requiredValidator]"
     />
 
     <!-- Email -->
     <v-text-field
-      v-model="email"
+      v-model="formData.email"
       label="Email"
       type="email"
       placeholder="Enter Your Email"
       outlined
       dense
       class="mb-3"
+      :rules="[requiredValidator, emailValidator]"
     />
 
     <!-- Phone Number -->
@@ -53,7 +74,7 @@ function register() {
 
     <!-- Password -->
     <v-text-field
-      v-model="password"
+      v-model="formData.password"
       :type="showPassword ? 'text' : 'password'"
       label="Password"
       placeholder="Enter Your Password"
@@ -62,7 +83,22 @@ function register() {
       class="mb-2"
       :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
       @click:append-inner="showPassword = !showPassword"
+      :rules="[requiredValidator, passwordValidator]"
     />
+
+    <v-col cols="12" md="6">
+      <v-text-field
+        v-model="formData.password_confirmation"
+        label="Password Confirmation"
+        :type="isPasswordConfirmVisible ? 'text' : 'password'"
+        :append-inner-icon="isPasswordConfirmVisible ? 'mdi-eye-off' : 'mdi-eye'"
+        @click:append-inner="isPasswordConfirmVisible = !isPasswordConfirmVisible"
+        :rules="[
+          requiredValidator,
+          confirmedValidator(formData.password_confirmation, formData.password),
+        ]"
+      ></v-text-field>
+    </v-col>
 
     <!-- Sign Up Button -->
     <v-btn block color="primary" class="mb-4" height="45" @click="register"> Sign Up </v-btn>
@@ -87,6 +123,7 @@ function register() {
     </v-btn>
     <v-btn
       block
+      type="submit"
       variant="outlined"
       color="grey"
       height="45"
