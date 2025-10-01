@@ -1,10 +1,9 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
 import RegisterForm from '@/components/auth/RegisterForm.vue'
-import { ref } from 'vue'
+import { useDisplay } from 'vuetify'
 
-
-
+const { mobile } = useDisplay()
 </script>
 
 <template>

@@ -1,36 +1,48 @@
 <script setup>
+import { requiredValidator, emailValidator } from '@/utils/validators'
 import { ref } from 'vue'
 
+const isPasswordVisible = ref(false)
+const refVForm = ref()
 
-const email = ref('')
-const password = ref('')
-const rememberMe = ref(false)
-const showPassword = ref(false)
+const formDataDefault = {
+  email: '',
+  password: '',
+}
 
-function login() {
-  console.log('Email:', email.value)
-  console.log('Password:', password.value)
-  console.log('Remember Me:', rememberMe.value)
-  router.push({ name: 'Dashboard' }) // Use router to navigate
+const formData = ref({
+  ...formDataDefault,
+})
+
+
+const onSubmit = () => {
+  // alert(formData.value.email)
+}
+
+const onFormSubmit = () => {
+  refVForm.value?.validate().then(({ valid }) => {
+    if (valid) onSubmit()
+  })
 }
 </script>
 <template>
   <!-- Login Form -->
-  <v-form>
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
     <!-- Email -->
     <v-text-field
-      v-model="email"
+      v-model="formData.email"
       label="Email"
       type="email"
       placeholder="example@gmail.com"
       outlined
       dense
       class="mb-3"
+      :rules="[requiredValidator, emailValidator]"
     />
 
     <!-- Password -->
     <v-text-field
-      v-model="password"
+      v-model="formData.password"
       :type="showPassword ? 'text' : 'password'"
       label="Password"
       placeholder="Enter Your Password"
@@ -39,6 +51,7 @@ function login() {
       class="mb-2"
       :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
       @click:append-inner="showPassword = !showPassword"
+      :rules="[requiredValidator]"
     />
 
     <!-- Remember Me + Forgot Password -->

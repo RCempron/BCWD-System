@@ -1,5 +1,9 @@
 <script setup>
 import { ref } from 'vue'
+import { useDisplay } from 'vuetify'
+
+const { mobile } = useDisplay()
+
 const theme = ref('light')
 
 function onClick() {
