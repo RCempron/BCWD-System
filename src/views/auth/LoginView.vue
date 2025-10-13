@@ -9,8 +9,7 @@ const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram']
 
 <template>
   <AppLayout>
-    <template #content> 
-      
+    <template #content>
       <v-card class="pa-6" max-width="400" elevation="0">
         <!-- Title -->
         <div class="text-center mb-6">
