@@ -14,7 +14,6 @@ const formData = ref({
   ...formDataDefault,
 })
 
-
 const onSubmit = () => {
   // alert(formData.value.email)
 }
@@ -65,9 +64,7 @@ const onFormSubmit = () => {
     </div>
 
     <!-- Login Button -->
-    <v-btn block color="primary" class="mb-4" height="45" @click="login">
-      <RouterLink to="/dashboard">Login</RouterLink>
-    </v-btn>
+    <v-btn block color="primary" class="mb-4" height="45" @click="login">Login</v-btn>
 
     <!-- Divider with text -->
     <div class="d-flex align-center mb-4">
