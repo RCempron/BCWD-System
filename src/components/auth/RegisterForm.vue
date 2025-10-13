@@ -6,12 +6,15 @@ import {
   confirmedValidator,
 } from '@/utils/validators'
 import { ref } from 'vue'
+import AlertNotification from '@/components/common/AlertNotification.vue'
+import { supabase, formActionDefault } from '@/utils/supabase.js'
 
 const formDataDefault = {
   firstname: '',
   lastname: '',
   email: '',
   password: '',
+  phone: '',
   password_confirmation: '',
 }
 
@@ -19,12 +22,41 @@ const formData = ref({
   ...formDataDefault,
 })
 
+const formAction = ref({
+  ...formActionDefault,
+})
+
 const isPasswordVisible = ref(false)
 const isPasswordConfirmVisible = ref(false)
 const refVForm = ref()
 
-const onSubmit = () => {
-  alert(formData.value.email)
+const onSubmit = async () => {
+  formAction.value = { ...formActionDefault } //para ma reset ang error na message kung mag invalid
+  formAction.value.formProcess = true
+
+  const { data, error } = await supabase.auth.signUp({
+    email: formData.value.email,
+    password: formData.value.password,
+    options: {
+      data: {
+        firstname: formData.value.firstname,
+      },
+    },
+  })
+  //kung naay error
+  if (error) {
+    console.log(error)
+    formAction.value.formErrorMessage = error.message
+    formAction.value.formStatus = error.status
+  } else if (data) {
+    //kung walay errror
+    console.log(data)
+    formAction.value.formSuccessMessage = 'Successfully Registered Account.'
+    // Add here more actions if you want
+    refVForm.value?.reset()
+  }
+
+  formAction.value.formProcess = false
 }
 
 const onFormSubmit = () => {
@@ -35,12 +67,17 @@ const onFormSubmit = () => {
 </script>
 
 <template>
+  <AlertNotification
+    :form-success-message="formAction.formSuccessMessage"
+    :form-error-message="formAction.formErrorMessage"
+  ></AlertNotification>
+
   <!-- Register Form -->
-   
   <v-form ref="refVForm" @submit.prevent="onFormSubmit">
     <!-- Username -->
+
     <v-text-field
-       v-model="formData.firstname"
+      v-model="formData.firstname"
       label="Firstname"
       placeholder="Enter Your Firstname"
       outlined
@@ -63,7 +100,7 @@ const onFormSubmit = () => {
 
     <!-- Phone Number -->
     <v-text-field
-      v-model="phone"
+      v-model="formData.phone"
       label="Phone Number"
       type="tel"
       placeholder="Enter Your Phone Number"
@@ -75,14 +112,14 @@ const onFormSubmit = () => {
     <!-- Password -->
     <v-text-field
       v-model="formData.password"
-      :type="showPassword ? 'text' : 'password'"
+      :type="isPasswordVisible ? 'text' : 'password'"
       label="Password"
       placeholder="Enter Your Password"
       outlined
       dense
       class="mb-2"
-      :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-      @click:append-inner="showPassword = !showPassword"
+      :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+      @click:append-inner="isPasswordVisible = !isPasswordVisible"
       :rules="[requiredValidator, passwordValidator]"
     />
 
@@ -101,7 +138,17 @@ const onFormSubmit = () => {
     </v-col>
 
     <!-- Sign Up Button -->
-    <v-btn block color="primary" class="mb-4" height="45" @click="register"> Sign Up </v-btn>
+    <v-btn
+      block
+      color="primary"
+      class="mb-4"
+      height="45"
+      type="submit"
+      :disabled="formAction.formProcess"
+      :loading="formAction.formProcess"
+    >
+      Sign Up
+    </v-btn>
 
     <!-- Divider with text -->
     <div class="d-flex align-center mb-4">
